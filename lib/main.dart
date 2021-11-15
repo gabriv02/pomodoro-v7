@@ -21,6 +21,8 @@ class MyApp extends StatelessWidget {
 }
 
 class DemoApp extends StatefulWidget {
+  Info? info;
+
   @override
   _DemoAppState createState() => _DemoAppState();
 }
@@ -36,6 +38,15 @@ class _DemoAppState extends State<DemoApp> {
   ApiService apiService = ApiService();
   SharedPreferences? sharedPreferences;
 
+  @override
+  void initState() {
+    super.initState();
+    idController.text = widget.info!.api.toString();
+    namController.text = widget.info!.name.toString();
+    tarController.text = widget.info!.tarea.toString();
+  }
+
+  bool editable = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -107,15 +118,57 @@ class _DemoAppState extends State<DemoApp> {
                 ),
                 SizedBox(height: 30.0),
                 Container(
-                  width: 200.0,
+                  width: 50.0,
                   child: ElevatedButton(
                     onPressed: () async {
                       Info data = await apiService
                           .getInfoId(int.parse(idController.text));
                       getData(data, idController, namController, tarController);
                     },
-                    child: Text('Obtener info'),
+                    child: Text('Obtener tarea'),
                     style: ElevatedButton.styleFrom(primary: Colors.red),
+                  ),
+                ),
+                SizedBox(height: 30.0),
+                Container(
+                  width: 200.0,
+                  child: ElevatedButton(
+                    onPressed: () async {
+                      Info info = Info(
+                        api: 0,
+                        name: namController.text.toString(),
+                        tarea: tarController.text.toString(),
+                      );
+                      await apiService.postInfo(info);
+                    },
+                    child: Text('Agregar tarea'),
+                    style: ElevatedButton.styleFrom(primary: Colors.red),
+                  ),
+                ),
+                SizedBox(height: 30.0),
+                Container(
+                  width: 200.0,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      if (editable) {
+                        Info info = Info(
+                          api: int.parse(idController.text),
+                          name: namController.text,
+                          tarea: tarController.text,
+                        );
+                        //apiService.putPerson(int.parse(_id.text.toString(), ))
+                        Navigator.pop(context);
+                      }
+                      setState(() {
+                        editable = !editable;
+                      });
+                    },
+                    child: const Text('Editar'),
+                    style: ElevatedButton.styleFrom(
+                        primary: Colors.blue.shade800,
+                        fixedSize: const Size(300, 50),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(25))),
                   ),
                 ),
                 Center(

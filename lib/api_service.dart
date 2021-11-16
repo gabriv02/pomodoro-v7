@@ -1,13 +1,11 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:http/http.dart' show Client;
 import 'package:http/http.dart' as http;
 import 'info.dart';
 
 class ApiService {
   final String url =
       'https://pomodoroapp20211114235511.azurewebsites.net/api/People';
-  Client client = Client();
 
   // GET FUNCTION
   Future<List<Info>> getInfo() async {
@@ -44,9 +42,9 @@ class ApiService {
 
   Future<void> postInfo(Info info) async {
     Map data = {
-      'api': 0,
-      'name': info.name.toString(),
-      'tarea': info.tarea.toString(),
+      //'personId':12,
+      'name': info.name,
+      'tarea': info.tarea,
     };
 
     final response = await http.post(
@@ -56,14 +54,15 @@ class ApiService {
       },
       body: jsonEncode(data),
     );
-    //if (response.statusCode != 201) throw Exception('Fallo al crear persona');
+    print(jsonEncode(data));
+    if (response.statusCode != 201) throw Exception('Fallo al crear persona');
   }
 
   Future<void> putInfo(int? api, Info info) async {
     Map data = {
-      'api': api,
-      'name': info.name.toString(),
-      'tarea': info.tarea.toString(),
+      'personId': api,
+      'name': info.name,
+      'tarea': info.tarea,
     };
 
     final response = await http.put(
@@ -74,6 +73,8 @@ class ApiService {
       },
       body: jsonEncode(data),
     );
+
+    print(jsonEncode(data));
 
     if (response.statusCode != 204) throw Exception('Hubo falla');
   }

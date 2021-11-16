@@ -31,7 +31,7 @@ class DemoApp extends StatefulWidget {
 
 class _DemoAppState extends State<DemoApp> {
   CountDownController _controller = CountDownController();
-  int _duration = 2;
+  int _duration = 1500;
   bool _isPause = false;
 
   TextEditingController idController = TextEditingController();
@@ -160,14 +160,33 @@ class _DemoAppState extends State<DemoApp> {
                             name: namController.text,
                             tarea: tarController.text,
                           );
-                          //apiService.putPerson(int.parse(_id.text.toString(), ))
-                          //Navigator.pop(context);
+                          apiService.putInfo(
+                              int.parse(idController.text.toString()), info);
+                          Navigator.pop(context);
                         }
                         setState(() {
                           editable = !editable;
                         });
                       },
                       child: const Text('Editar'),
+                      style: ElevatedButton.styleFrom(primary: Colors.red),
+                    ),
+                  ),
+                  SizedBox(height: 30.0),
+                  Container(
+                    width: 200.0,
+                    child: ElevatedButton(
+                      onPressed: () async {
+                        Info info = Info(
+                          api: 0,
+                          name: namController.text.toString(),
+                          tarea: tarController.text.toString(),
+                        );
+
+                        await apiService.deleteInfo(
+                            int.parse(idController.text.toString()));
+                      },
+                      child: Text('eliminar tarea'),
                       style: ElevatedButton.styleFrom(primary: Colors.red),
                     ),
                   ),

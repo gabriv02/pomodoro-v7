@@ -56,7 +56,7 @@ class ApiService {
       },
       body: jsonEncode(data),
     );
-    if (response.statusCode != 201) throw Exception('Fallo al crear persona');
+    //if (response.statusCode != 201) throw Exception('Fallo al crear persona');
   }
 
   Future<void> putInfo(int? api, Info info) async {

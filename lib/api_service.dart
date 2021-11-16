@@ -5,7 +5,7 @@ import 'info.dart';
 
 class ApiService {
   final String url =
-      'https://pomodoroapp20211114235511.azurewebsites.net/api/People';
+      'https://pomodoroapp20211116010908.azurewebsites.net/api/People';
 
   // GET FUNCTION
   Future<List<Info>> getInfo() async {

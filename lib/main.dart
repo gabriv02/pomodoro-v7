@@ -4,7 +4,6 @@ import 'package:flutter_circular_timer/api_service.dart';
 import 'package:flutter_circular_timer/info.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
 
 void main() => runApp(MyApp());
@@ -31,7 +30,7 @@ class DemoApp extends StatefulWidget {
 
 class _DemoAppState extends State<DemoApp> {
   CountDownController _controller = CountDownController();
-  int _duration = 1500;
+  int _duration = 5;
   bool _isPause = false;
 
   TextEditingController idController = TextEditingController();
@@ -42,13 +41,6 @@ class _DemoAppState extends State<DemoApp> {
   SharedPreferences? sharedPreferences;
 
   @override
-  // void initState() {
-  //   super.initState();
-  //   idController.text = widget.info!.api.toString();
-  //   namController.text = widget.info!.name.toString();
-  //   tarController.text = widget.info!.tarea.toString();
-  // }
-
   bool editable = false;
   @override
   Widget build(BuildContext context) {
@@ -92,7 +84,7 @@ class _DemoAppState extends State<DemoApp> {
                           color: Colors.green,
                         ),
                       ),
-                      hintText: "Nombre",
+                      hintText: "Materia",
                       border: UnderlineInputBorder(),
                       focusedBorder: UnderlineInputBorder(
                         borderSide: BorderSide(
@@ -205,16 +197,11 @@ class _DemoAppState extends State<DemoApp> {
                       isReverse: true,
                       onComplete: () {
                         FlutterRingtonePlayer.play(
-                          android: AndroidSounds
-                              .notification, //Gabriela aquiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii
-                          ios: IosSounds
-                              .glass, //Gabriela aquiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii
-                          looping:
-                              false, // Android only - API >= 28 /Gabriela aquiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii
-                          volume:
-                              0.1, // Android only - API >= 28/Gabriela aquiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii
-                          asAlarm:
-                              false, // Android only - all APIs/Gabriela aquiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii
+                          android: AndroidSounds.notification,
+                          ios: IosSounds.glass,
+                          looping: false, // Android only - API >= 28 /
+                          volume: 0.1, // Android only - API >= 28/
+                          asAlarm: false, // Android only - all APIs/
                         );
                         Alert(
                                 context: context,
